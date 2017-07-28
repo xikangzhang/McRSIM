@@ -1,0 +1,9 @@
+*~
+.DS_Store
+*.avi
+*.mat
+*.csv
+*.png
+*Thumbs.db
+expData/
+legacy/
