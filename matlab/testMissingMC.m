@@ -7,8 +7,8 @@ dataPath = '~/research/data/Hopkins155_AdditionalSequences_MissingData';
 file = dir(dataPath);
 ii = 0;
 % rng(0);
-% for i = 1:length(file)
-for i = 9
+for i = 1:length(file)
+% for i = 9
 	if( (file(i).isdir == 1) && ~strcmp(file(i).name,'.') && ~strcmp(file(i).name,'..') )
 		filePath = file(i).name;
 % 		eval(['cd ' filepath]);
@@ -53,7 +53,7 @@ for i = 9
             rng('default');
 %             [missrate, grp, bestRank, minNcutValue] = RSIM_Incomplete(X',indX', s, 4, 1);
 % 			[missrate, grp, bestRank, minNcutValue] = RSIMJBLD_Incomplete(X',indX',s,4,1);
-            [missrate, grp, bestRank,W, index] = imprvRSIM_Incomplete(X', indX', s, 4, 1, camID);
+%             [missrate, grp, bestRank,W, index] = imprvRSIM_Incomplete(X', indX', s, 4, 1, camID);
 %             [missrate, grp, bestRank,W, index] = imprvRSIM_JBLD_Incomplete(X', indX', s, 4, 1, camID);
            
 

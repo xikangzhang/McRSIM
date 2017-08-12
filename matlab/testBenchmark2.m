@@ -19,9 +19,7 @@ func = {
     '[missrate, grp, bestRank, minNcutValue,W, index] = RSIM_JBLD(X, s, 2, 1);';
     '[missrate, grp, index] = RSIM_View_JBLD_Obj(X, s, 2, 1, camID);';
     '[missrate, grp, bestRank,W, index] = imprvRSIM(X, s, 2, 1, camID);';
-%     '[missrate, grp, bestRank,W, index] = imprvRSIM2(X, s, 2, 1, camID);';
     '[missrate, grp, bestRank,W, index] = imprvRSIM_JBLD(X, s, 2, 1, camID);';
-%     '[missrate, grp, bestRank,W, index] = imprvRSIM_JBLD2(X, s, 2, 1, camID);';
     };
 
 
@@ -46,12 +44,6 @@ for funIndex = 1:length(func)
         x2 = x; s2 = s;
         [s2, ind] = sort(s2); x2 = x2(:, ind, :);
         x = cat(2, x1, x2); s = [s1; s2]; camID = [ones(length(s1), 1); 2*ones(length(s2), 1)];
-        
-%         % velocity
-%         v = ones(size(x));
-%         v(:,:,end) = [];
-%         v(1:2,:,:) = diff(x(1:2,:,:), 1, 3);
-%         x = v;
         
         N = size(x,2);
         F = size(x,3);

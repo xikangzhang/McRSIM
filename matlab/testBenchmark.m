@@ -8,6 +8,9 @@ dataPath = fullfile('~/research/data', dataName);
 resPath = fullfile('../expData', 'res');
 if ~exist(resPath, 'dir'), mkdir(resPath); end
 
+% transform = 'RotationAndTranslation';
+transform = 'Delay';
+
 func = {
     '[missrate,C1, label, gt] = SSCwrapper(X, s);';
     '[missrate, grp, CKSym, index] = ssc_JBLD(X, s);';
@@ -25,8 +28,7 @@ func = {
 outputFile = 'output.txt';
 fid = fopen(outputFile, 'w');
 
-for funIndex = 6
-% for funIndex = 1:length(func)    
+for funIndex = 1:length(func)    
     
     file = listFolder(dataPath);
     ii = 0;
@@ -34,7 +36,6 @@ for funIndex = 6
     ii3 = 0;
     tic
     for i = 1:length(file)
-%     for i = 82
         filePath = file{i};
         f = dir(fullfile(dataPath, filePath));
         foundValidData = false;
@@ -54,54 +55,27 @@ for funIndex = 6
             
             [s, ind] = sort(s); x = x(:, ind, :); y = y(:, ind, :);
             
-%             % rotation and translation
-%             theta = pi / 4; T = [300; 200]; ratio = 0.5;
-%             [x,y,camID] = dataTransform(x, y, K, theta, T, ratio);
-%             % rotation on half of the data
-%             theta = pi / 4; ratio = 0.5;
-%             [x, y, camID] = dataRotation(x, y, K, theta, ratio);
-%             % translation on half of the data
-%             T = [300; 200]; ratio = 0.5;
-%             [x, y, camID] = dataTranslation(x, y, K, T, ratio);
-            % delay on half of the data
-            delay = 4; ratio = 0.5;
-            [x, y, camID] = dataDelay(x, y, delay, ratio);
+            if strcmp(transform, 'RotationAndTranslation')
+                % rotation and translation
+                theta = pi / 4; T = [300; 200]; ratio = 0.5;
+                [x,y,camID] = dataTransform(x, y, K, theta, T, ratio);
+            elseif strcmp(transform, 'Delay')
+                % delay on half of the data
+                delay = 4; ratio = 0.5;
+                [x, y, camID] = dataDelay(x, y, delay, ratio);
+            end
             
             [camID, idx] = sort(camID); x = x(:, idx, :); y = y(:, idx, :); s = s(idx);
-            
-%             % velocity
-%             v = ones(size(x));
-%             v(:,:,end) = [];
-%             v(1:2,:,:) = diff(x(1:2,:,:), 1, 3);
-%             x = v;
             
             N = size(x,2);
             F = size(x,3);
             D = 3*F;
             X = reshape(permute(x(1:3,:,:),[1 3 2]),D,N);	% note here the all-one rows are also included
             
-            %             [missrate, grp, bestRank, minNcutValue,W, index] = RSIM(X, s);
-            %             [missrate, grp, bestRank, minNcutValue,W, index] = RSIM_JBLD(X, s, 4, 1);
-            %             [missrate, grp, bestRank, minNcutValue,W] = RSIM_JBLD2(X, s, 4, 1);
-            %             [missrate, grp, bestRank, minNcutValue,W, index] = RSIM_JBLD3(X, s, 4, 1, camID);
-            %             [missrate, grp, bestRank, minNcutValue,W, index] = RSIM_JBLD_oneshot(X, s, 4, 1, camID);
-            %             [missrate, grp, bestRank, minNcutValue,W] = RSIM_JBLD4(X, s, 4, 1, camID);
-            %             [missrate, grp, index] = RSIM_View_JBLD_Obj(X, s, 4, 1, camID);
-            %             [missrate, grp, bestRank,W, index] = imprvRSIM(X, s, 4, 1, camID);
-            %             [missrate, grp, bestRank, minNcutValue,W, index] = imprvRSIM_JBLD(X, s, 4, 1, camID);
-            %             [missrate, grp, bestRank,W, index] = imprvRSIM_JBLD2(X, s, 4, 1, camID);
-            %             [missrate, grp, bestRank,W, index] = imprvRSIM_JBLD_oneshot(X, s, 4, 1, camID);
-            %             [missrate,C1, label, gt] = SSCwrapper(X, s);
-            %             [missrate, grp, CKSym, index] = ssc_JBLD(X, s, camID);
-            %             [missrate, grp, index] = SSC_View_JBLD_Obj(X, s, camID);
-            
             eval(func{funIndex});
             
             
             if ~exist('label','var') && ~exist('gt','var')
-%                 [~, labelIndex] = sort(index);
-%                 label = grp * labelIndex';
-%                 gt = s;
                 nCluster = size(grp, 2);
                 label = grp * (1:nCluster)';
                 gt = index(s)';
