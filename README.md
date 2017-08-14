@@ -4,7 +4,7 @@ This code is implementation for the following paper:
 
 Xikang Zhang, Bengisu Osbay, Mario Sznaier, Octavia Camps, Dynamics Enhanced Multi-Camera Motion Segmentation from Unsynchronized Videos, ICCV 2017.
 
-## Prerequisites:
+## Prerequisites
 
 To get experimental results of the paper, you need to download the following data set:
 
@@ -12,7 +12,7 @@ To get experimental results of the paper, you need to download the following dat
 - Hopkins Additional Sequences with Missing data: http://vision.jhu.edu/data/
 - RSL 12 data set: http://robustsystems.coe.neu.edu/?q=content/publications
 
-## Testing:
+## Testing
 
 The demo code are in matlab folder. You may need to set up the correct path before running the code.
 
@@ -24,7 +24,7 @@ The demo code are in matlab folder. You may need to set up the correct path befo
 - testGrossMC.m: Multi-camera Motion Segmentation on Hopkins 155 data set with gross contamination, half trajectories rotated 45 degree as Camera 2.
 - testSingleCam.m: Single-camera Motion Segmentation on Hopkins 155 data set
 
-## citation
+## Citation
 
 Please cite the paper if it helps your research:
 
