@@ -1,4 +1,7 @@
-function [missrate, label, gt] = LRR_JBLD(X, s)
+function [missrate, label, gt] = LRR_MDD(X, s)
+% Inputs:
+% X: data matrix
+% s: groundtruth labels
 
 X(3:3:end-1, :) = []; % retain the last row of ones
 lambda = 4;

@@ -1,32 +1,31 @@
-% Motion segmentation with Robust Shape Interaction Matrix Method with JBLD
+% Benchmark code of Multi-camera Motion segmentation on RSL12
 
 clear; close all
 addpath(genpath('../3rdParty'));
 addpath(genpath('../matlab'));
-dataName = 'MultiViewMotion2';
+dataName = 'RSL12';
 dataPath = fullfile('~/research/data', dataName);
 resPath = fullfile('../expData', 'res');
 if ~exist(resPath, 'dir'), mkdir(resPath); end
 
 func = {
     '[missrate,C1, label, gt] = SSCwrapper(X, s);';
-    '[missrate, grp, CKSym, index] = ssc_JBLD(X, s);';
-    '[missrate, grp, index] = SSC_View_JBLD_Obj(X, s, camID);';
+    '[missrate, grp, CKSym, index] = SSC_MDD(X, s);';
+    '[missrate, grp, index] = SSC_MDD_LA(X, s, camID);';
     '[missrate, label, gt] = LRRwrapper(X, s);';
-    '[missrate, label, gt] = LRR_JBLD(X, s);';
-    '[missrate, grp, index] = LRR_View_JBLD_Obj(X, s, camID);';
+    '[missrate, label, gt] = LRR_MDD(X, s);';
+    '[missrate, grp, index] = LRR_MDD_LA(X, s, camID);';
     '[missrate, grp, bestRank, minNcutValue,W, index] = RSIM(X, s, 2, 1);';
-    '[missrate, grp, bestRank, minNcutValue,W, index] = RSIM_JBLD(X, s, 2, 1);';
-    '[missrate, grp, index] = RSIM_View_JBLD_Obj(X, s, 2, 1, camID);';
-    '[missrate, grp, bestRank,W, index] = imprvRSIM(X, s, 2, 1, camID);';
-    '[missrate, grp, bestRank,W, index] = imprvRSIM_JBLD(X, s, 2, 1, camID);';
+    '[missrate, grp, bestRank, minNcutValue,W, index] = RSIM_MDD(X, s, 2, 1);';
+    '[missrate, grp, index] = RSIM_MDD_LA(X, s, 2, 1, camID);';
+    '[missrate, grp, bestRank,W, index] = McRSIM(X, s, 2, 1, camID);';
+    '[missrate, grp, bestRank,W, index] = McRSIM_MDD(X, s, 2, 1, camID);';
     };
 
 
-outputFile = 'output2.txt';
+outputFile = 'outputBenchmark2.txt';
 fid = fopen(outputFile, 'w');
 
-% for funIndex = 9:11
 for funIndex = 1:length(func)
     file = listFolder(dataPath);
     ii = 0;
@@ -35,7 +34,6 @@ for funIndex = 1:length(func)
     nMotion = zeros(1, length(file));
     tic
     for i = 1:length(file)
-        % for i = 14
         [~, f, ~] = fileparts(file{i});
         load(fullfile(dataPath, file{i}, [f '_cam1_truth.mat']));
         x1 = x; s1 = s;

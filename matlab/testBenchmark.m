@@ -1,35 +1,33 @@
-% Motion segmentation with Robust Shape Interaction Matrix Method with JBLD
+% Benchmark code of Multi-camera Motion segmentation on Hopkins155
 
 clear; close all
 addpath(genpath('../3rdParty'));
 addpath(genpath('../matlab'));
 dataName = 'Hopkins155';
+transform = 'RotationAndTranslation';
+% transform = 'Delay';
 dataPath = fullfile('~/research/data', dataName);
 resPath = fullfile('../expData', 'res');
 if ~exist(resPath, 'dir'), mkdir(resPath); end
 
-% transform = 'RotationAndTranslation';
-transform = 'Delay';
-
 func = {
     '[missrate,C1, label, gt] = SSCwrapper(X, s);';
-    '[missrate, grp, CKSym, index] = ssc_JBLD(X, s);';
-    '[missrate, grp, index] = SSC_View_JBLD_Obj(X, s, camID);';
+    '[missrate, grp, CKSym, index] = SSC_MDD(X, s);';
+    '[missrate, grp, index] = SSC_MDD_LA(X, s, camID);';
     '[missrate, label, gt] = LRRwrapper(X, s);';
-    '[missrate, label, gt] = LRR_JBLD(X, s);';
-    '[missrate, grp, index] = LRR_View_JBLD_Obj(X, s, camID);';
+    '[missrate, label, gt] = LRR_MDD(X, s);';
+    '[missrate, grp, index] = LRR_MDD_LA(X, s, camID);';
     '[missrate, grp, bestRank, minNcutValue,W, index] = RSIM(X, s);';
-    '[missrate, grp, bestRank, minNcutValue,W, index] = RSIM_JBLD(X, s, 4, 1);';
-    '[missrate, grp, index] = RSIM_View_JBLD_Obj(X, s, 4, 1, camID);';
-    '[missrate, grp, bestRank,W, index] = imprvRSIM(X, s, 4, 1, camID);';
-    '[missrate, grp, bestRank,W, index] = imprvRSIM_JBLD(X, s, 4, 1, camID);';
+    '[missrate, grp, bestRank, minNcutValue,W, index] = RSIM_MDD(X, s, 4, 1);';
+    '[missrate, grp, index] = RSIM_MDD_LA(X, s, 4, 1, camID);';
+    '[missrate, grp, bestRank,W, index] = McRSIM(X, s, 4, 1, camID);';
+    '[missrate, grp, bestRank,W, index] = McRSIM_MDD(X, s, 4, 1, camID);';
     };
 
-outputFile = 'output.txt';
+outputFile = 'outputBenchmark.txt';
 fid = fopen(outputFile, 'w');
 
-for funIndex = 1:length(func)    
-    
+for funIndex = 1:length(func)
     file = listFolder(dataPath);
     ii = 0;
     ii2 = 0;
@@ -165,4 +163,5 @@ for funIndex = 1:length(func)
         results(end+1) = res;
     end
 end
+fclose(fid);
 save results results

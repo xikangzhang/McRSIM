@@ -1,4 +1,4 @@
-% Motion segmentation with Robust Shape Interaction Matrix Method with JBLD
+% Motion segmentation with RSIM_MDD on Hopkins 155
 
 clear; close all
 addpath(genpath('../3rdParty'));
@@ -11,17 +11,14 @@ ii2 = 0;
 ii3 = 0;
 tic
 for i = 1:length(file)
-% for i = 101+3
     if( (file(i).isdir == 1) && ~strcmp(file(i).name,'.') && ~strcmp(file(i).name,'..') )
         filePath = file(i).name;
-        % 		eval(['cd ' filePath]);
         f = dir(fullfile(dataPath, filePath));
         foundValidData = false;
         for j = 1:length(f)
             if( ~isempty(strfind(f(j).name,'_truth.mat')) )
                 ind = j;
                 foundValidData = true;
-                % 				eval(['load ' f(ind).name]);
                 load(fullfile(dataPath, filePath, f(ind).name));
                 if(max(s)==5)
                     foundValidData = false;
@@ -29,7 +26,6 @@ for i = 1:length(file)
                 break;
             end
         end
-%         cd ..
         
         if(foundValidData)
             N = size(x,2);
@@ -39,8 +35,7 @@ for i = 1:length(file)
             X = reshape(permute(x(1:3,:,:),[1 3 2]),D,N);	% note here the all-one rows are also included
             
 %             [missrate, grp, bestRank, minNcutValue,W] = RSIM(X, s);
-            [missrate, grp, bestRank, minNcutValue,W] = RSIM_JBLD(X, s, 4, 1);
-%             [missrate, grp, bestRank, minNcutValue,W] = RSIM_JBLD2(X, s, 4, 1);
+            [missrate, grp, bestRank, minNcutValue,W] = RSIM_MDD(X, s, 4, 1);
             
             ii = ii+1;
             Missrate(ii) = missrate;

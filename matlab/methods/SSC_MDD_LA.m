@@ -1,4 +1,8 @@
-function [missrate, grp, index] = SSC_View_JBLD_Obj(X, s, camID)
+function [missrate, grp, index] = SSC_MDD_LA(X, s, camID)
+% Inputs:
+% X: data matrix
+% s: groundtruth labels
+% camID: camera ID of each trajectory
 
 K = max(s);
 X1 = X(:, camID==1);
@@ -42,7 +46,7 @@ end
 
 W = BuildAdjacency(thrC(C,rho));
 
-% JBLD
+% MDD
 features = cell(1, size(X, 2));
 for j=1:size(X, 2)
     t = reshape(X(:, j), 2, []);
@@ -53,21 +57,10 @@ end
 HH  = getHH(features,opt);
 D = HHdist(HH, [], opt);
 D = D / max(D(:));
-
 Wj = exp(-D / 1);
-
-
 
 W = W .* Wj;
 grp = ncutW(W, K);
-% label = sortLabel_order(NcutDiscrete, 1:size(D,1));                     
-% label = SpectralClustering(W,K);
-% grp = zeros(length(label), K); 
-% for i = 1:K
-% grp(label==i, i) = 1;
-% end
-
-% missrate = ErrorRate(grp, s); % calculate the error rate
 
 HHcenter = cell(1, K);
 for i = 1:K

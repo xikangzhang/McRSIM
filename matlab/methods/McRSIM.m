@@ -1,6 +1,11 @@
-function [missrate, grp, bestRank,W, index] = imprvRSIM(X, s, UpperD, LowerD, camID)
-% Input: X --  data matrix, s -- groundtruth label, UpperD -- largest rank
-% Pan Ji, pan.ji@anu.edu.au
+function [missrate, grp, bestRank, W, index] = McRSIM(X, s, UpperD, LowerD, camID)
+% Inputs:
+% X: data matrix
+% s: groundtruth labels
+% UpperD: rank upper bound divided by number of motions
+% LowerD: rank upper bound divided by number of motions
+% camID: camera ID of each trajectory
+
 if(nargin<4)
 	LowerD = 1;
 end
@@ -8,8 +13,7 @@ if(nargin<3)
 	UpperD = 4;
 end
 K = max(s);
-r = LowerD*K:UpperD*K; % rank from lower bound K to upper bound 4K
-% [~,~,VR] = svd(X,'econ'); % take the right singular vector of X
+r = LowerD*K:UpperD*K;
 [~,~,VR1] = svd(X(:,camID==1),'econ'); % take the right singular vector of X
 [~,~,VR2] = svd(X(:,camID==2),'econ'); % take the right singular vector of X
 clusterLabel = {};

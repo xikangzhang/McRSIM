@@ -1,11 +1,11 @@
-function [missrate, grp, bestRank,W, index] = imprvRSIM_JBLD_Incomplete(X, mask, s, UpperD, LowerD, camID)
+function [missrate, grp, bestRank,W, index] = McRSIM_MDD_Incomplete(X, mask, s, UpperD, LowerD, camID)
 % Inputs:
 % X: data matrix
 % mask: indicator matrix of missing data
 % s: groundtruth label
-% UpperD: largest rank
-% LowerD, smallest rank
-% camID: camera Identity
+% UpperD: rank upper bound divided by number of motions
+% LowerD: rank upper bound divided by number of motions
+% camID: camera ID of each trajectory
 
 if(nargin<4)
 	LowerD = 1;
@@ -16,25 +16,20 @@ end
 K = max(s);
 LowerR = LowerD*K;
 UpperR = UpperD*K;
-r = LowerR:UpperR; % rank from lower bound K to upper bound 4K
+r = LowerR:UpperR;
 X1 = X(camID==1, :);
 X2 = X(camID==2, :);
 M1 = mask(camID==1, :);
 M2 = mask(camID==2, :);
 VR1 = findVR(X1, M1, UpperR);
 VR2 = findVR(X2, M2, UpperR);
-% fill the missing entries
-
-% follow McRSIM in the same way
-% [~,~,VR1] = svd(X1,'econ'); % take the right singular vector of X
-% [~,~,VR2] = svd(X2,'econ'); % take the right singular vector of X
-
 
 clusterLabel = {};
 approxBound = [];
 Aff = {};
 eigenValues = [];
 
+% MDD
 opt.metric = 'JBLD';
 opt.sigma = 10^-4;
 opt.H_structure = 'HtH';
@@ -64,7 +59,6 @@ for ii = 1:length(r)
         V1t = V1 * R;
         W = [V1t; V2] * [V1t', V2'];
     end
-%     W = W / max(W(:));
     
     W = real(W.^3.5);
     W = W .* Wj;

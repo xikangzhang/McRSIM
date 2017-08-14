@@ -10,7 +10,6 @@ end
 
 H = cell(1,length(features));
 for i=1:length(features)
-%     t = diff(features{i},[],2);
     t = features{i};
     if strcmp(opt.H_structure,'HtH')
         Hsize = opt.H_rows;

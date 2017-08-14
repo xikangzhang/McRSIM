@@ -1,6 +1,12 @@
-function [missrate, grp, bestRank, minNcutValue,W, index] = RSIM_JBLD(X, s, UpperD, LowerD)
-% Input: X --  data matrix, s -- groundtruth label, UpperD -- largest rank
-% Pan Ji, pan.ji@anu.edu.au
+function [missrate, grp, bestRank, minNcutValue,W, index] = RSIM_MDD(X, s, UpperD, LowerD, verbose)
+% Inputs:
+% X: data matrix
+% s: groundtruth labels
+% UpperD: rank upper bound divided by number of motions
+% LowerD: rank upper bound divided by number of motions
+% verbose: indicator of whether to use homogeneous coordinates, if it exist
+% use x-y, if not, use x-y-1
+
 if(nargin<4)
 	LowerD = 1;
 end
@@ -8,20 +14,24 @@ if(nargin<3)
 	UpperD = 4;
 end
 K = max(s);
-r = LowerD*K:UpperD*K; % rank from lower bound K to upper bound 4K
+r = LowerD*K:UpperD*K;
 [~,~,VR] = svd(X,'econ'); % take the right singular vector of X
 clusterLabel = {};
 approxBound = [];
 Aff = {};
 eigenValues = [];
 
-% JBLD
+% MDD
 features = cell(1, size(X, 2));
 for j=1:size(X, 2)
-%     t = reshape(X(:, j), 2, []);
-    t = reshape(X(:, j), 3, []); t(3, :) = [];
-    v = diff(t,1,2); features{j} = v;
-%     features{j} = t;
+    if ~exist('verbose','var')
+        t = reshape(X(:, j), 3, []);
+        t(3, :) = [];
+    else
+        t = reshape(X(:, j), 2, []);
+    end
+    v = diff(t, 1, 2);
+    features{j} = v;
 end
 
 opt.metric = 'JBLD';
@@ -29,17 +39,10 @@ opt.sigma = 10^-4;
 opt.H_structure = 'HtH';
 opt.H_rows = 10;
 
-HHt  = getHH(features,opt);
+HHt  = getHH(features, opt);
 D = HHdist(HHt, [], opt);
-% Wj2 = HHdist_ms(HHt,HHt,opt);
-% Wj2 = Wj2.^(-1/log(min(Wj2(:))));
-% D = D / norm(D);
-% D = D .* D;
 D = D / max(D(:));
-
 Wj = exp(-D / 1);
-% NcutDiscrete = ncutW(W, nCluster);
-% label = sortLabel_order(NcutDiscrete, 1:size(D,1));
 
 for ii = 1:length(r)
     rnk = r(ii);

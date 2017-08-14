@@ -1,4 +1,8 @@
-function [missrate, grp, index] = LRR_View_JBLD_Obj(X, s, camID)
+function [missrate, grp, index] = LRR_MDD_LA(X, s, camID)
+% Inputs:
+% X: data matrix
+% s: groundtruth labels
+% camID: camera ID of each trajectory
 
 K = max(s);
 X1 = X(:, camID==1);
@@ -40,7 +44,7 @@ U = U*diag(sqrt(S));
 U = normr(U);
 L = (U*U').^4;
 
-% JBLD
+% MDD
 X(end, :) = [];
 features = cell(1, size(X, 2));
 for j=1:size(X, 2)

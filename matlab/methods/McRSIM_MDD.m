@@ -1,6 +1,13 @@
-function [missrate, grp, bestRank,W, index] = imprvRSIM_JBLD(X, s, UpperD, LowerD, camID)
-% Input: X --  data matrix, s -- groundtruth label, UpperD -- largest rank
-% Pan Ji, pan.ji@anu.edu.au
+function [missrate, grp, bestRank, W, index] = McRSIM_MDD(X, s, UpperD, LowerD, camID, verbose)
+% Inputs:
+% X: data matrix
+% s: groundtruth labels
+% UpperD: rank upper bound divided by number of motions
+% LowerD: rank upper bound divided by number of motions
+% camID: camera ID of each trajectory
+% verbose: indicator of whether to use homogeneous coordinates, if it exist
+% use x-y, if not, use x-y-1
+
 if(nargin<4)
 	LowerD = 1;
 end
@@ -8,8 +15,7 @@ if(nargin<3)
 	UpperD = 4;
 end
 K = max(s);
-r = LowerD*K:UpperD*K; % rank from lower bound K to upper bound 4K
-% [~,~,VR] = svd(X,'econ'); % take the right singular vector of X
+r = LowerD*K:UpperD*K;
 [~,~,VR1] = svd(X(:,camID==1),'econ'); % take the right singular vector of X
 [~,~,VR2] = svd(X(:,camID==2),'econ'); % take the right singular vector of X
 clusterLabel = {};
@@ -17,13 +23,16 @@ approxBound = [];
 Aff = {};
 eigenValues = [];
 
-% JBLD
+% MDD
 features = cell(1, size(X, 2));
 for j=1:size(X, 2)
-    t = reshape(X(:, j), 3, []);
-    t(3, :) = [];
+    if ~exist('verbose','var')
+        t = reshape(X(:, j), 3, []);
+        t(3, :) = [];
+    else
+        t = reshape(X(:, j), 2, []);
+    end
     v = diff(t,1,2);
-    %         v = diff(v,1,2);
     features{j} = v;
 end
 
@@ -34,10 +43,6 @@ opt.H_rows = 10;
 
 HHt  = getHH(features,opt);
 D = HHdist(HHt, [], opt);
-% Wj2 = HHdist_ms(HHt,HHt,opt);
-% Wj2 = Wj2.^(-1/log(min(Wj2(:))));
-% D = D / norm(D);
-% D = D .* D;
 D = D / max(D(:));
 Wj = exp(-D / 1);
 
@@ -60,8 +65,6 @@ for ii = 1:length(r)
         V1t = V1 * R;
         W = [V1t; V2] * [V1t', V2'];
     end
-%     W = W / max(W(:));
-    
     W = real(W.^3.5);
     
     W = W .* Wj;

@@ -1,11 +1,11 @@
-function [missrate, grp, bestRank,W, index] = imprvRSIM_Incomplete(X, mask, s, UpperD, LowerD, camID)
+function [missrate, grp, bestRank,W, index] = McRSIM_Incomplete(X, mask, s, UpperD, LowerD, camID)
 % Inputs:
 % X: data matrix
 % mask: indicator matrix of missing data
-% s: groundtruth label
-% UpperD: largest rank
-% LowerD, smallest rank
-% camID: camera Identity
+% s: groundtruth labels
+% UpperD: rank upper bound divided by number of motions
+% LowerD: rank upper bound divided by number of motions
+% camID: camera ID of each trajectory
 
 if(nargin<4)
 	LowerD = 1;
@@ -16,7 +16,7 @@ end
 K = max(s);
 LowerR = LowerD*K;
 UpperR = UpperD*K;
-r = LowerR:UpperR; % rank from lower bound K to upper bound 4K
+r = LowerR:UpperR;
 X1 = X(camID==1, :);
 X2 = X(camID==2, :);
 M1 = mask(camID==1, :);
@@ -59,7 +59,7 @@ for ii = 1:length(r)
 	L = D*W;	
 	eigenValues = eigs(L,K+1);	% you can also easily modify the ncutW function and 
 	                            % let it output the eignvalues to save the above three steps
-	approxBound(ii) = ComputeNcutValue(W,clusterLabel{ii})/(eigenValues(K)-eigenValues(K+1));(eigenValues(K)-eigenValues(K+1))
+	approxBound(ii) = ComputeNcutValue(W,clusterLabel{ii})/(eigenValues(K)-eigenValues(K+1));
 end
 
 [minNcutValue, idx] = min(approxBound);

@@ -1,5 +1,11 @@
-function [missrate, grp, bestRank, minNcutValue] = RSIMJBLD_Incomplete(X,mask, s, UpperD, LowerD)
-% Pan Ji, pan.ji@anu.edu.au
+function [missrate, grp, bestRank, minNcutValue] = RSIM_MDD_Incomplete(X, mask, s, UpperD, LowerD)
+% Inputs:
+% X: data matrix
+% mask: indicator matrix of missing data
+% s: groundtruth labels
+% UpperD: rank upper bound divided by number of motions
+% LowerD: rank upper bound divided by number of motions
+
 if(nargin<5)
 	LowerD = 1;
 end
@@ -12,7 +18,7 @@ UpperR = UpperD*K;
 r = LowerR:UpperR;
 [N,F] = size(X);
 
-% JBLD
+% MDD
 opt.metric = 'JBLD';
 opt.sigma = 10^-4;
 opt.H_structure = 'HtH';
