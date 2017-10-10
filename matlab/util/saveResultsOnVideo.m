@@ -3,7 +3,7 @@
 % display trajectories on videos
 
 clear; close all; dbstop if error;
-dataPath = '~/research/data/MultiViewMotion2';
+dataPath = '~/research/data/RSL12';
 % dataPath = '~/research/data/Hopkins155';
 labelPath = '../expData/res';
 camList = {'cam1', 'cam2'};

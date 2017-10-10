@@ -10,16 +10,16 @@ rowTerm = {'avgtwo', 'medtwo', 'avgthree', 'medthree', 'avgtol', ...
     'medtol', 'time', 'avgtime'};
 colTerm = {
         '[missrate,C1, label, gt] = SSCwrapper(X, s);';
-    '[missrate, grp, CKSym, index] = ssc_JBLD(X, s);';
-    '[missrate, grp, index] = SSC_View_JBLD_Obj(X, s, camID);';
+    '[missrate, grp, CKSym, index] = SSC_MDD(X, s);';
+    '[missrate, grp, index] = SSC_MDD_LA(X, s, camID);';
     '[missrate, label, gt] = LRRwrapper(X, s);';
-    '[missrate, label, gt] = LRR_JBLD(X, s);';
-    '[missrate, grp, index] = LRR_View_JBLD_Obj(X, s, camID);';
+    '[missrate, label, gt] = LRR_MDD(X, s);';
+    '[missrate, grp, index] = LRR_MDD_LA(X, s, camID);';
     '[missrate, grp, bestRank, minNcutValue,W, index] = RSIM(X, s, 2, 1);';
-    '[missrate, grp, bestRank, minNcutValue,W, index] = RSIM_JBLD(X, s, 2, 1);';
-    '[missrate, grp, index] = RSIM_View_JBLD_Obj(X, s, 2, 1, camID);';
-    '[missrate, grp, bestRank,W, index] = imprvRSIM(X, s, 2, 1, camID);';
-    '[missrate, grp, bestRank,W, index] = imprvRSIM_JBLD(X, s, 2, 1, camID);';
+    '[missrate, grp, bestRank, minNcutValue,W, index] = RSIM_MDD(X, s, 2, 1);';
+    '[missrate, grp, index] = RSIM_MDD_LA(X, s, 2, 1, camID);';
+    '[missrate, grp, bestRank,W, index] = McRSIM(X, s, 2, 1, camID);';
+    '[missrate, grp, bestRank,W, index] = McRSIM_MDD(X, s, 2, 1, camID);';
     };
 
 funName = {results.funName};

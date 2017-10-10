@@ -1,9 +1,12 @@
 % display trajectories on videos
 
 clear; close all; dbstop if error;
-dataPath = '~/research/data/MultiViewMotionRaw';
-seqPath = 'toy5305_seq1';
-camName = 'cam2';
+dataPath = '~/research/data/RSL12';
+pList = listFolder(dataPath);
+idx = 1;
+camName = 'cam1';
+seqPath = pList{idx};
+% seqPath = '1T1RT_001';
 fileName = [seqPath, '_', camName '.avi'];
 [~, f, ~] = fileparts(fileName);
 load(fullfile(dataPath, seqPath, [f '_truth.mat']));
@@ -33,5 +36,5 @@ while hasFrame(vidObj)
     end
     hold off;
     count = count + 1;
-    pause(0.5);
+    pause(0.05);
 end

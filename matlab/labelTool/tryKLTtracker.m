@@ -4,8 +4,8 @@
 
 clear; close all; dbstop if error;
 dataPath = '~/research/data/MultiViewMotionRaw';
-seqPath = 'toy5305_seq1';
-camName = 'cam1';
+seqPath = 'toy2_038';
+camName = 'cam2';
 fileName = [seqPath, '_', camName, '.avi'];
 
 % [~,f,~] = fileparts(fileName);
@@ -19,7 +19,7 @@ vidFrame = readFrame(vidObj);
 wid = size(vidFrame, 2);
 hgt = size(vidFrame, 1);
 
-points = detectMinEigenFeatures(rgb2gray(vidFrame), 'MinQuality', 0.01);
+points = detectMinEigenFeatures(rgb2gray(vidFrame), 'MinQuality', 0.1);
 % points = detectSURFFeatures(rgb2gray(vidFrame));
 points = points.Location;
 points = manualRefine(vidFrame, points);

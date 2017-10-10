@@ -1,8 +1,8 @@
 function manualLabelID
 
 close all;
-dataPath = '~/research/data/MultiViewMotionRaw';
-seqPath = '1T1RT_seq4';
+dataPath = '~/research/data/RSL60';
+seqPath = 'toy2_038';
 camName = 'cam2';
 fileName = [seqPath, '_', camName, '.avi'];
 [~, f, ~] = fileparts(fullfile(dataPath, seqPath, fileName));
