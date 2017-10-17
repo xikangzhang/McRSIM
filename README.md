@@ -13,6 +13,10 @@ To get experimental results of the paper, you need to download the following dat
 - RSL12 data set: http://robustsystems.coe.neu.edu/?q=content/publications
 - RSL60 data set: http://robustsystems.coe.neu.edu/?q=content/publications. This is an extension of the RSL12 data set. We provide this to the community as a benchmark for multi-camera motion segmentation problem. The results of RSL60 with the same protocol of the paper is as follows:
 
+<p align="left">
+<img src="https://github.com/xikangzhang/McRSIM/tree/master/readme/RSL60.pdf", width="720">
+</p>
+
 ## Testing
 
 The demo code are in matlab folder. You may need to set up the correct path before running the code.
