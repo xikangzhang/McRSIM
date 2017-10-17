@@ -13,7 +13,7 @@ if ~exist(videoOutPath, 'dir'), mkdir(videoOutPath); end
 
 seqPathList = listFolder(dataPath);
 for i = 1:length(seqPathList)
-% for i = 82
+% for i = 10
     seqPath = seqPathList{i};
     load(fullfile(labelPath, ['label_' seqPath]), 'label');
     for j = 1:length(camList)
@@ -31,7 +31,7 @@ for i = 1:length(seqPathList)
         end
         
         % c = colormap('lines');
-        c = 'gym';
+        c = 'gmy';
 %         c = 'bbb';
         
         vidIn = VideoReader(fullfile(dataPath, seqPath, fileName));
@@ -57,5 +57,6 @@ for i = 1:length(seqPathList)
             pause(0.01);
         end
         close(vidOut);
+%         imwrite(currFrame.cdata, fullfile(videoOutPath, [f, '_out.bmp']))
     end
 end

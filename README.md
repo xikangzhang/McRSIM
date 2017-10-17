@@ -10,7 +10,8 @@ To get experimental results of the paper, you need to download the following dat
 
 - Hopkins 155 data set: http://www.vision.jhu.edu/data/hopkins155/
 - Hopkins Additional Sequences with Missing data: http://vision.jhu.edu/data/
-- RSL 12 data set: http://robustsystems.coe.neu.edu/?q=content/publications
+- RSL12 data set: http://robustsystems.coe.neu.edu/?q=content/publications
+- RSL60 data set: http://robustsystems.coe.neu.edu/?q=content/publications. This is an extension of the RSL12 data set. We provide this to the community as a benchmark for multi-camera motion segmentation problem. The results of RSL60 with the same protocol of the paper is as follows:
 
 ## Testing
 
