@@ -11,9 +11,6 @@ To get experimental results of the paper, you need to download the following dat
 - Hopkins 155 data set: http://www.vision.jhu.edu/data/hopkins155/
 - Hopkins Additional Sequences with Missing data: http://vision.jhu.edu/data/
 - RSL12 data set: http://robustsystems.coe.neu.edu/?q=content/publications
-- RSL60 data set: http://robustsystems.coe.neu.edu/?q=content/publications. This is an extension of the RSL12 data set. We provide this to the community as a benchmark for multi-camera motion segmentation problem. The results of RSL60 with the same protocol of the paper is as follows:
-
-![Alt](https://github.com/xikangzhang/McRSIM/blob/master/readme/TableRSL60.png)
 
 ## Testing
 
@@ -26,6 +23,14 @@ The demo code are in matlab folder. You may need to set up the correct path befo
 - testGross.m: Single-camera Motion Segmentation on Hopkins 155 data set with gross contamination
 - testGrossMC.m: Multi-camera Motion Segmentation on Hopkins 155 data set with gross contamination, half trajectories rotated 45 degree as Camera 2.
 - testSingleCam.m: Single-camera Motion Segmentation on Hopkins 155 data set
+
+## RSL60: extended benchmark data set
+
+This is an extension of the RSL12 data set. We provide this to the community as a larger benchmark for multi-camera motion segmentation problem. It can be downloaded at http://robustsystems.coe.neu.edu/?q=content/publications.
+
+The results of RSL60 with the same protocol of the paper is shown in the following table. To reproduce the results, please replace "RSL12" with "RSL60" in testBenchmark2.m.
+
+![Alt](https://github.com/xikangzhang/McRSIM/blob/master/readme/TableRSL60.png)
 
 ## Citation
 
