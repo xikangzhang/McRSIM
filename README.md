@@ -11,16 +11,14 @@ We would like to perform motion segmentation on sequences from multi-cameras wit
 
 ## Results
 
-Solarized dark             |  Solarized Ocean
+Toys (Camera 1)             |  Toys (Camera 2)
 :-------------------------:|:-------------------------:
 ![](https://github.com/xikangzhang/McRSIM/blob/master/readme/toy_cam1.gif)  |  ![](https://github.com/xikangzhang/McRSIM/blob/master/readme/toy_cam2.gif)
 
-<p align="left">
-<img src="https://github.com/xikangzhang/McRSIM/blob/master/readme/toy_cam1.gif", width="360">
-</p>
-<p align="left">
-<img src="https://github.com/xikangzhang/McRSIM/blob/master/readme/toy_cam2.gif", width="360">
-</p>
+Car (Camera 1)             |  Car (Camera 2)
+:-------------------------:|:-------------------------:
+![](https://github.com/xikangzhang/McRSIM/blob/master/readme/car_cam1.gif)  |  ![](https://github.com/xikangzhang/McRSIM/blob/master/readme/car_cam2.gif)
+
 
 ## Prerequisites
 To get experimental results of the paper, you need to download the following data set:
