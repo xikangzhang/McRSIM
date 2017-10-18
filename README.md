@@ -11,6 +11,10 @@ We would like to perform motion segmentation on sequences from multi-cameras wit
 
 ## Results
 
+Solarized dark             |  Solarized Ocean
+:-------------------------:|:-------------------------:
+![](https://github.com/xikangzhang/McRSIM/blob/master/readme/toy_cam1.gif)  |  ![](https://github.com/xikangzhang/McRSIM/blob/master/readme/toy_cam2.gif)
+
 <p align="left">
 <img src="https://github.com/xikangzhang/McRSIM/blob/master/readme/toy_cam1.gif", width="360">
 </p>
