@@ -3,7 +3,6 @@
 *.avi
 *.mat
 *.csv
-*.png
 *Thumbs.db
 expData/
 legacy/
