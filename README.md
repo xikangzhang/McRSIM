@@ -21,14 +21,14 @@ Car (Camera 1)             |  Car (Camera 2)
 
 
 ## Prerequisites
-To get experimental results of the paper, you need to download the following data set:
+To get experimental results of the paper, you need to download the following data sets:
 
 - Hopkins 155 data set: http://www.vision.jhu.edu/data/hopkins155/
 - Hopkins Additional Sequences with Missing data: http://vision.jhu.edu/data/
 - RSL12 data set: http://robustsystems.coe.neu.edu/?q=content/publications
 
 ## Testing
-The demo code are in matlab folder. You may need to set up the correct path before running the code.
+The demo code is in the matlab folder. You may need to set up the correct path before running the code.
 
 - testBenchmark.m: simulated Multi-camera Motion Segmentation on modified Hopkins 155 data set
 - testBenchmark2.m: Multi-camera Motion Segmentation on RSL 12 data set
@@ -41,7 +41,7 @@ The demo code are in matlab folder. You may need to set up the correct path befo
 ## RSL60: extended benchmark data set
 This is an extension of the RSL12 data set. We provide this to the community as a larger benchmark for multi-camera motion segmentation problem. It can be downloaded at http://robustsystems.coe.neu.edu/?q=content/publications.
 
-The results of RSL60 with the same protocol of the paper is shown in the following table. To reproduce the results, please replace "RSL12" with "RSL60" in testBenchmark2.m.
+The results of RSL60 with the same protocol of the paper are shown in the following table. To reproduce the results, please replace "RSL12" with "RSL60" in testBenchmark2.m.
 
 ![Alt](https://github.com/xikangzhang/McRSIM/blob/master/readme/TableRSL60.png)
 
@@ -49,7 +49,7 @@ The results of RSL60 with the same protocol of the paper is shown in the followi
 Please cite the paper if it helps your research:
 
     @inproceedings{zhang2017mcms,
-        author = {Xikang Zhang, Bengisu Osbay, Mario Sznaier, Octavia Camps},,
+        author = {Xikang Zhang, Bengisu Osbay, Mario Sznaier, Octavia Camps},
         booktitle = {ICCV},
         title = {Dynamics Enhanced Multi-Camera Motion Segmentation from Unsynchronized Videos},
         year = {2017}
